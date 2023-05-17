@@ -71,7 +71,7 @@ async function main() {
         console.log(articleIdToMetadata[card.item.id]);
     }
     console.log("Successfully found ", successOSMCount, "restaurants on open street map!")
-    fs.writeFileSync(seriesBody.title + ".json", JSON.stringify(articleIdToMetadata, null, 4))
+    fs.writeFileSync("restaurant_reviews" + ".json", JSON.stringify(articleIdToMetadata, null, 4))
 }
 main();
 
