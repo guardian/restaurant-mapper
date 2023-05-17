@@ -1,7 +1,7 @@
 import { ListResponse } from "./lists_response";
 import { JSDOM } from "jsdom";
-import CsvReadableStream from "csv-reader";
 import * as fs from "fs";
+import { RestaurantArticleMetadata } from "./restaurant_metadata";
 
 console.log("Hello!")
 
@@ -11,34 +11,13 @@ const restaurantSeriesList = [
     "https://mobile.guardianapis.com/uk/lists/tag/lifeandstyle/series/marina-o-loughlin-on-restaurants"
 ];
 
-// Load UK city/town/village names
-async function loadCSVNames(csvFilename: string, colIndex = 0): Promise<string[]> {
-    return new Promise((resolve) => {
-        let seenHeader = false;
-        let rows: any[] = [];
-        let inputStream = fs.createReadStream(csvFilename, 'utf8');
-
-        inputStream
-            .pipe(new CsvReadableStream({ parseNumbers: false, parseBooleans: false, trim: true }))
-            .on('data', function (row) {
-                if (!seenHeader) {
-                    seenHeader = true;
-                } else {
-                    rows.push(row[colIndex].toLowerCase())
-                }
-            })
-            .on('end', function () {
-                resolve(rows);
-            });
-    });
-}
+let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {};
 
 async function main() {
 
     // const ukTownNames = await loadCSVNames("./uk_towns_by_population1.csv");
     let successOSMCount = 0;
     let res = await fetch(restaurantSeriesList[0])
-    let idToPossibleAddress = {};
     console.log("URL ", restaurantSeriesList[0]);
     const seriesBody: ListResponse = await res.json();
     const reviewCards = seriesBody.cards.filter((card) => card.cardDesignType == "Review");
@@ -78,19 +57,19 @@ async function main() {
 
         const priceSentences = lastItemText?.split(". ").filter(s => s.includes("£")).join(".");
 
-        idToPossibleAddress[card.item.id] = {
-            id: card.item.id,
+        articleIdToMetadata[card.item.id] = {
+            articleId: card.item.id,
             title: card.title,
-            lastItemText,
-            possibleCoordinates,
-            probableRestaurantTitle,
-            possibleAddress,
+            unparsedLocationSentence: lastItemText,
+            nomatimCoordinates: possibleCoordinates,
+            possibleRestaurantTitle: probableRestaurantTitle,
+            possibleAddress: possibleAddress,
             priceSentences,
         };
-        console.log(idToPossibleAddress[card.item.id]);
+        console.log(articleIdToMetadata[card.item.id]);
     }
     console.log("Successfully found ", successOSMCount, "restaurants on open street map!")
-    fs.writeFileSync(seriesBody.title + ".json", JSON.stringify(idToPossibleAddress, null, 4))
+    fs.writeFileSync(seriesBody.title + ".json", JSON.stringify(articleIdToMetadata, null, 4))
 }
 main();
 
@@ -106,8 +85,8 @@ async function queryNomatim(query) {
       if (data.length > 0) {
         console.log(url);
         return {
-            latitude: data[0].lat,
-            longitude: data[0].lon
+            lat: data[0].lat,
+            lon: data[0].lon
         }
       }
     }
