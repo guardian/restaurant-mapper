@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Restaurants</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <style>
+     #map {
+       height: 1200px;
+     }
+    </style>
+    <script>
+     document.addEventListener("DOMContentLoaded", async (event) => {
+       var map = L.map('map').setView([51.505, -0.09], 8);
+       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         maxZoom: 19,
+         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+       }).addTo(map);
+       const jayIcon = L.icon({
+         iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/JayBlueRound.svg',
+         iconSize: [64, 100],
+         iconAnchor: [32, 100],
+       });
+       const graceIcon = L.icon({
+         iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/GraceBlueRound.svg',
+         iconSize: [64, 100],
+         iconAnchor: [32, 100],
+       });
+       const unknownIcon = L.icon({
+         iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/UnknownBlueRound.svg',
+         iconSize: [64, 100],
+         iconAnchor: [32, 100],
+       });
+       const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
+       const articleAddresses = await s3Response.json();
+       for (const articleKey in articleAddresses) {
+         const data = articleAddresses[articleKey];
+         if (data && data.possibleCoordinates) {
+           const icon = data.seriesName.startsWith("Grace Dent") ? graceIcon
+                      : (data.seriesName.startsWith("Jay Rayner") ? jayIcon : unknownIcon)
+           L.marker([data.possibleCoordinates.lat, data.possibleCoordinates.lon], {icon: icon}).addTo(map)
+            .bindPopup(`<a href="https://theguardian.com/${data.articleId}">${data.title}</a>: ${data.priceSentences}`);
+         }
+       }
+     })
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
