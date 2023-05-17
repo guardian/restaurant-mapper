@@ -53,12 +53,24 @@ async function main() {
     const graceDentMetadatas = await fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
         (bodyDom) => bodyDom.window.document.body.lastChild?.textContent || null
-    )
+    );
     const jayRaynerMetadatas = await fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/jay-rayner-on-restaurants",
         (bodyDom) => bodyDom.window.document.body.firstChild?.textContent || null
-    )
-    const metadatas = graceDentMetadatas.concat(jayRaynerMetadatas);
+    );
+    const marinaOLoughlinMetadatas = await fetchReviewCards(
+        "https://mobile.guardianapis.com/uk/lists/tag/lifeandstyle/series/marina-o-loughlin-on-restaurants",
+        (bodyDom) => {
+            for (let i = bodyDom.window.document.body.children.length - 1; i > 0; i--) {
+                let text = bodyDom.window.document.body.children.item(i)?.textContent?.toLowerCase() || "";
+                if (text.indexOf("open") > -1) {
+                    return text;
+                }
+            }
+            return null;
+        }
+    );
+    const metadatas = marinaOLoughlinMetadatas;
     for (let metadata of metadatas) {
         let card = metadata.card;
         const probableRestaurantTitle = card?.title.split(",")[0] || "";
