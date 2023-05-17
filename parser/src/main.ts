@@ -11,8 +11,6 @@ const restaurantSeriesList = [
     "https://mobile.guardianapis.com/uk/lists/tag/lifeandstyle/series/marina-o-loughlin-on-restaurants"
 ];
 
-let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {};
-
 // bodyDom.window.document.body.lastChild?.textContent
 
 async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM) => string | null, allPages: boolean = true): Promise<RestaurantArticleMetadata[]> {
@@ -55,16 +53,22 @@ function imageToUrl(image: MainImage): string | undefined {
 async function main() {
 
     // const ukTownNames = await loadCSVNames("./uk_towns_by_population1.csv");
-    let successOSMCount = 0;
-    const graceDentMetadatas = await fetchReviewCards(
+    const graceDentMetadatas = fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
-        (bodyDom) => bodyDom.window.document.body.lastChild?.textContent || null
+        (bodyDom) => {
+            const lastChild = bodyDom.window.document.body.lastChild?.textContent;
+            if (lastChild.match(/Food [0-9]\/[0-9]{2}/)) {
+                return bodyDom.window.document.body.children[bodyDom.window.document.body.children.length - 1].textContent
+            } else {
+                return lastChild;
+            }
+        }
     );
-    const jayRaynerMetadatas = await fetchReviewCards(
+    const jayRaynerMetadatas = fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/jay-rayner-on-restaurants",
         (bodyDom) => bodyDom.window.document.body.firstChild?.textContent || null
     );
-    const marinaOLoughlinMetadatas = await fetchReviewCards(
+    const marinaOLoughlinMetadatas = fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/lifeandstyle/series/marina-o-loughlin-on-restaurants",
         (bodyDom) => {
             for (let i = bodyDom.window.document.body.children.length - 1; i > 0; i--) {
@@ -76,86 +80,93 @@ async function main() {
             return null;
         }
     );
-    const metadatas = [graceDentMetadatas, jayRaynerMetadatas, marinaOLoughlinMetadatas].flat();
-    for (let metadata of metadatas) {
-        let card = metadata.card;
-        const probableRestaurantTitle = card?.title.split(",")[0] || "";
-        let titleRemoved = metadata.unparsedLocationSentence?.toLowerCase().replace(probableRestaurantTitle?.toLowerCase(), "")
-        const clauses = titleRemoved?.split(/(, )|\(|\. /);
-        const isTitle = (clause: string) => clause.trim().toLowerCase() === probableRestaurantTitle?.toLowerCase();
-        const isUrl = (clause: string) => clause.includes("http") || clause.includes("www.") || clause.includes(".com");
-        const isPhoneNumber = (clause: string) => clause.trim().match(
-            /^([0-9]{3}[ -][0-9]{4}[ -][0-9]{4})|([0-9]{5}[ -][0-9]{6})|([0-9]{4}[ -][0-9]{3}[ -][0-9]{4})/
-        );
-        const isPrice = (clause: string) => clause.includes("£");
-        const isCity = (clause: string) => clause.includes("london") || clause.includes("salford");
-        const containsPostcode = (clause: string) => clause.match(/ [a-z]{1,2}[0-9][a-z0-9]? ?([0-9][a-z]{2})?/)
-        let address: string[] = [];
-        for (let x of clauses ?? []) {
-            if (!x?.trim() || x === ", ") {
-                continue;
-            } else if (isTitle(x)) {
-                continue;
-            } else if (isUrl(x) || isPhoneNumber(x) || isPrice(x)) {
-                break;
-            } else if (isCity(x) || containsPostcode(x)) {
-                address.push(x);
-                break;
-            } else {
-                address.push(x);
-            }
-        }
-
-        if (titleRemoved && titleRemoved?.indexOf(".") > -1) {
-            titleRemoved = titleRemoved.slice(0, titleRemoved?.indexOf("."));
-        }
-        const commaSections = titleRemoved?.toLowerCase().split(",").map((section) => section.trim());
-        let possibleCoordinates: any = null;
-        let possibleAddress = titleRemoved;
-        if (commaSections) {
-            let indexCommaIndex = 0;
-            let commaLimit = commaSections.length < 6 ? commaSections.length : 5;
-            for (let i = 0; i < commaLimit; i++) {
-                let commaSection = commaSections[i];
-                if (i > 1) {
-                    if (commaSection.startsWith("0")) {
-                        indexCommaIndex = i;
-                    }
-                    if (commaSection.indexOf("(0")) {
-                        indexCommaIndex = i + 1;
-                    }
-                    break;
-                }
-            }
-            // possibleAddress = commaSections?.slice(0, indexCommaIndex).join(", ");
-            possibleAddress = address.join(", ");
-            console.log("errrmm.. ", possibleAddress);
-            possibleCoordinates = await queryNomatim(possibleAddress);
-        }
-        
-        if (possibleCoordinates) {
-            successOSMCount++;
-        }
-
-        const priceSentences = metadata.unparsedLocationSentence?.split(". ").filter(s => s.includes("£")).join(". ");
-
-        articleIdToMetadata[metadata.articleId] = {
-            ...metadata,
-            possibleCoordinates: possibleCoordinates,
-            possibleRestaurantTitle: probableRestaurantTitle,
-            possibleAddress: possibleAddress,
-            priceSentences,
-        };
-
-        delete articleIdToMetadata[metadata.articleId].card;
-        
-        console.log(articleIdToMetadata[metadata.articleId]);
-    }
+    const metadatas = await Promise.all([graceDentMetadatas, jayRaynerMetadatas, marinaOLoughlinMetadatas]);
+    const processedMetadata = await batchPromises(metadatas.flat(), processMetadata, 10);
+    let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {};
+    processedMetadata.map(x => articleIdToMetadata[x.articleId] = x);
+    const successOSMCount = processedMetadata.filter((x => x.possibleCoordinates)).length;
     console.log("Successfully found ", successOSMCount, "restaurants on open street map!")
     fs.writeFileSync("restaurant_reviews" + ".json", JSON.stringify(articleIdToMetadata, null, 4))
 }
 main();
 
+async function batchPromises<T, V>(items: V[], f: (x: V) => Promise<T>, batchSize: number): Promise<T[]> {
+    const batch: T[] = await Promise.all(items.slice(0, batchSize).map(f));
+    const rest = await batchPromises(items.slice(batchSize), f, batchSize);
+    return batch.concat(rest);
+}
+
+async function processMetadata(metadata: RestaurantArticleMetadata): Promise<RestaurantArticleMetadata> {
+    let card = metadata.card;
+    const probableRestaurantTitle = card?.title.split(",")[0] || "";
+    let titleRemoved = metadata.unparsedLocationSentence?.toLowerCase().replace(probableRestaurantTitle?.toLowerCase(), "")
+    const clauses = titleRemoved?.split(/(, )|\(|\. /);
+    const isTitle = (clause: string) => clause.trim().toLowerCase() === probableRestaurantTitle?.toLowerCase();
+    const isUrl = (clause: string) => clause.includes("http") || clause.includes("www.") || clause.includes(".com");
+    const isPhoneNumber = (clause: string) => clause.trim().match(
+        /^([0-9]{3}[ -][0-9]{4}[ -][0-9]{4})|([0-9]{5}[ -][0-9]{6})|([0-9]{4}[ -][0-9]{3}[ -][0-9]{4})|([0-9]{5}[ -][0-9]{3}[ -][0-9]{3})/
+    );
+    const isPrice = (clause: string) => clause.includes("£");
+    const isCity = (clause: string) => clause.includes("london") || clause.includes("salford");
+    const containsPostcode = (clause: string) => clause.match(/[a-z]{1,2}[0-9][a-z0-9]? ?([0-9][a-z]{2})?/)
+    let address: string[] = [];
+    for (let x of clauses ?? []) {
+        if (!x?.trim() || x === ", ") {
+            continue;
+        } else if (isTitle(x)) {
+            continue;
+        } else if (isUrl(x) || isPhoneNumber(x) || isPrice(x)) {
+            break;
+        } else if (isCity(x) || containsPostcode(x)) {
+            address.push(x);
+            break;
+        } else {
+            address.push(x);
+        }
+    }
+
+    if (titleRemoved && titleRemoved?.indexOf(".") > -1) {
+        titleRemoved = titleRemoved.slice(0, titleRemoved?.indexOf("."));
+    }
+    const commaSections = titleRemoved?.toLowerCase().split(",").map((section) => section.trim());
+    let possibleCoordinates: any = null;
+    let possibleAddress = titleRemoved;
+    if (commaSections) {
+        let indexCommaIndex = 0;
+        let commaLimit = commaSections.length < 6 ? commaSections.length : 5;
+        for (let i = 0; i < commaLimit; i++) {
+            let commaSection = commaSections[i];
+            if (i > 1) {
+                if (commaSection.startsWith("0")) {
+                    indexCommaIndex = i;
+                }
+                if (commaSection.indexOf("(0")) {
+                    indexCommaIndex = i + 1;
+                }
+                break;
+            }
+        }
+        // possibleAddress = commaSections?.slice(0, indexCommaIndex).join(", ");
+        possibleAddress = address.join(", ");
+        possibleCoordinates = await queryNomatim(possibleAddress);
+    }
+
+    const priceSentences = metadata.unparsedLocationSentence?.split(". ").filter(s => s.includes("£")).join(". ");
+
+    const result = {
+        ...metadata,
+        possibleCoordinates: possibleCoordinates,
+        possibleRestaurantTitle: probableRestaurantTitle,
+        possibleAddress: possibleAddress,
+        priceSentences,
+    };
+
+    delete result.card;
+
+    console.log(result);
+
+    return result;
+}
 
 async function queryNomatim(query) {
     // Get the coordinates from Nominatim.
@@ -164,14 +175,14 @@ async function queryNomatim(query) {
 
     // If the request was successful, parse the response and add the coordinates to the array.
     if (response.ok) {
-      const data = await response.json();
-      if (data.length > 0) {
-        console.log(url);
-        return {
-            lat: data[0].lat,
-            lon: data[0].lon
+        const data = await response.json();
+        if (data.length > 0) {
+            console.log(url);
+            return {
+                lat: data[0].lat,
+                lon: data[0].lon
+            }
         }
-      }
     }
     return null;
 }
