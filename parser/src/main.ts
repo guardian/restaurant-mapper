@@ -58,11 +58,13 @@ async function main() {
     let successOSMCount = 0;
     const graceDentMetadatas = await fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
-        (bodyDom) => bodyDom.window.document.body.lastChild?.textContent || null
+        (bodyDom) => bodyDom.window.document.body.lastChild?.textContent || null,
+        false
     );
     const jayRaynerMetadatas = await fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/jay-rayner-on-restaurants",
-        (bodyDom) => bodyDom.window.document.body.firstChild?.textContent || null
+        (bodyDom) => bodyDom.window.document.body.firstChild?.textContent || null,
+        false
     );
     const marinaOLoughlinMetadatas = await fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/lifeandstyle/series/marina-o-loughlin-on-restaurants",
@@ -74,7 +76,8 @@ async function main() {
                 }
             }
             return null;
-        }
+        },
+        false
     );
     const metadatas = [graceDentMetadatas, jayRaynerMetadatas, marinaOLoughlinMetadatas].flat();
     for (let metadata of metadatas) {
