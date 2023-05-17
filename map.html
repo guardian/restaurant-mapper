@@ -25,12 +25,12 @@
          maxZoom: 19,
          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
        }).addTo(map);
-       const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurants.json');
+       const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
        const articleAddresses = await s3Response.json();
        for (const articleKey in articleAddresses) {
          const data = articleAddresses[articleKey];
          if (data && data.possibleCoordinates) {
-           L.marker([data.possibleCoordinates.latitude, data.possibleCoordinates.longitude]).addTo(map)
+           L.marker([data.possibleCoordinates.lat, data.possibleCoordinates.lon]).addTo(map)
             .bindPopup(`<a href="https://theguardian.com/${data.id}">${data.title}</a>: ${data.priceSentences}`);
          }
        }
