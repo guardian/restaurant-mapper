@@ -204,7 +204,7 @@
          const data = articleAddresses[articleKey];
          if (data && data.possibleCoordinates) {
            L.marker([data.possibleCoordinates.latitude, data.possibleCoordinates.longitude]).addTo(map)
-            .bindPopup(data.title);
+            .bindPopup(`<a href="https://theguardian.com/${data.id}">${data.title}</a>`);
          }
        }
      })
