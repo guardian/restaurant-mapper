@@ -12,7 +12,7 @@ export interface RestaurantArticleMetadata {
     possibleAddress?: string;
     priceSentences?: string;
 
-    nomatimCoordinates?: {
+    possibleCoordinates?: {
         lat: string;
         lon: string;
     }

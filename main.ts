@@ -61,7 +61,7 @@ async function main() {
             articleId: card.item.id,
             title: card.title,
             unparsedLocationSentence: lastItemText,
-            nomatimCoordinates: possibleCoordinates,
+            possibleCoordinates: possibleCoordinates,
             possibleRestaurantTitle: probableRestaurantTitle,
             possibleAddress: possibleAddress,
             priceSentences,
