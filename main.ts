@@ -76,6 +76,8 @@ async function main() {
             successOSMCount++;
         }
 
+        const priceSentences = lastItemText?.split(". ").filter(s => s.includes("£")).join(".");
+
         idToPossibleAddress[card.item.id] = {
             id: card.item.id,
             title: card.title,
@@ -83,6 +85,7 @@ async function main() {
             possibleCoordinates,
             probableRestaurantTitle,
             possibleAddress,
+            priceSentences,
         };
         console.log(idToPossibleAddress[card.item.id]);
     }
