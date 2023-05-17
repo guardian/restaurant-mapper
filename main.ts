@@ -65,6 +65,8 @@ async function main() {
             possibleRestaurantTitle: probableRestaurantTitle,
             possibleAddress: possibleAddress,
             priceSentences,
+            seriesName: seriesBody.title,
+            seriesUri: restaurantSeriesList[0]
         };
         console.log(articleIdToMetadata[card.item.id]);
     }
