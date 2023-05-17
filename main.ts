@@ -16,8 +16,8 @@ let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {}
 // bodyDom.window.document.body.lastChild?.textContent
 
 async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM) => string | null): Promise<RestaurantArticleMetadata[]> {
-    let res = await fetch(restaurantSeriesList[0])
-    console.log("URL ", restaurantSeriesList[0]);
+    let res = await fetch(seriesUri)
+    console.log("URL ", seriesUri);
     const seriesBody: ListResponse = await res.json();
     const reviewCards = seriesBody.cards.filter((card) => card.cardDesignType == "Review");
     return reviewCards.map((card) => {
@@ -42,10 +42,15 @@ async function main() {
 
     // const ukTownNames = await loadCSVNames("./uk_towns_by_population1.csv");
     let successOSMCount = 0;
-    const metadatas = await fetchReviewCards(
+    const graceDentMetadatas = await fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
         (bodyDom) => bodyDom.window.document.body.lastChild?.textContent || null
     )
+    const jayRaynerMetadatas = await fetchReviewCards(
+        "https://mobile.guardianapis.com/uk/lists/tag/food/series/jay-rayner-on-restaurants",
+        (bodyDom) => bodyDom.window.document.body.firstChild?.textContent || null
+    )
+    const metadatas = graceDentMetadatas.concat(jayRaynerMetadatas);
     for (let metadata of metadatas) {
         let card = metadata.card;
         const probableRestaurantTitle = card?.title.split(",")[0] || "";
@@ -61,8 +66,13 @@ async function main() {
             let commaLimit = commaSections.length < 6 ? commaSections.length : 5;
             for (let i = 0; i < commaLimit; i++) {
                 let commaSection = commaSections[i];
-                if (commaSection.startsWith("0") && i > 1) {
-                    indexCommaIndex = i;
+                if (i > 1) {
+                    if (commaSection.startsWith("0")) {
+                        indexCommaIndex = i;
+                    }
+                    if (commaSection.indexOf("(0")) {
+                        indexCommaIndex = i + 1;
+                    }
                     break;
                 }
             }
