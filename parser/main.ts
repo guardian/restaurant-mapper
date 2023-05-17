@@ -84,7 +84,7 @@ async function main() {
         const clauses = titleRemoved?.split(/(, )|\(|\. /);
         const isTitle = (clause: string) => clause.trim().toLowerCase() === probableRestaurantTitle?.toLowerCase();
         const isUrl = (clause: string) => clause.includes("http") || clause.includes("www.") || clause.includes(".com");
-        const isPhoneNumber = (clause: string) => clause.trim().match(/^[0-9]{3}/);
+        const isPhoneNumber = (clause: string) => clause.trim().match(/^([0-9]{3}[ -][0-9]{4}[ -][0-9]{4})|([0-9]{5}[ -][0-9]{6})/);
         const isPrice = (clause: string) => clause.includes("£");
         const isCity = (clause: string) => clause.includes("london") || clause.includes("salford");
         let address: string[] = [];
