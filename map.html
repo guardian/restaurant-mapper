@@ -31,7 +31,7 @@
          const data = articleAddresses[articleKey];
          if (data && data.possibleCoordinates) {
            L.marker([data.possibleCoordinates.lat, data.possibleCoordinates.lon]).addTo(map)
-            .bindPopup(`<a href="https://theguardian.com/${data.id}">${data.title}</a>: ${data.priceSentences}`);
+            .bindPopup(`<a href="https://theguardian.com/${data.articleId}">${data.title}</a>: ${data.priceSentences}`);
          }
        }
      })
