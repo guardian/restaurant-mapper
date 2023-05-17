@@ -13,23 +13,43 @@ const restaurantSeriesList = [
 
 let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {};
 
-async function main() {
+// bodyDom.window.document.body.lastChild?.textContent
 
-    // const ukTownNames = await loadCSVNames("./uk_towns_by_population1.csv");
-    let successOSMCount = 0;
+async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM) => string | null): Promise<RestaurantArticleMetadata[]> {
     let res = await fetch(restaurantSeriesList[0])
     console.log("URL ", restaurantSeriesList[0]);
     const seriesBody: ListResponse = await res.json();
     const reviewCards = seriesBody.cards.filter((card) => card.cardDesignType == "Review");
-    for (let card of reviewCards) {
+    return reviewCards.map((card) => {
         let bodyDom = new JSDOM(card.item.body);
-        const lastItemText = bodyDom.window.document.body.lastChild?.textContent
+        const lastItemText = extractorFn(bodyDom)
             ?.replace("\n", "")
             .replace("•", "")
             .replace("’", "'")
-            .trim()
-        const probableRestaurantTitle = card.title.split(",")[0];
-        let titleRemoved = lastItemText?.toLowerCase().replace(probableRestaurantTitle.toLowerCase(), "")
+            .trim();
+        return {
+            articleId: card.item.id,
+            title: card.title,
+            card: card,
+            unparsedLocationSentence: lastItemText,
+            seriesUri: seriesUri,
+            seriesName: seriesBody.title
+        }
+    });
+}
+
+async function main() {
+
+    // const ukTownNames = await loadCSVNames("./uk_towns_by_population1.csv");
+    let successOSMCount = 0;
+    const metadatas = await fetchReviewCards(
+        "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
+        (bodyDom) => bodyDom.window.document.body.lastChild?.textContent || null
+    )
+    for (let metadata of metadatas) {
+        let card = metadata.card;
+        const probableRestaurantTitle = card?.title.split(",")[0] || "";
+        let titleRemoved = metadata.unparsedLocationSentence?.toLowerCase().replace(probableRestaurantTitle?.toLowerCase(), "")
         if (titleRemoved && titleRemoved?.indexOf(".") > -1) {
             titleRemoved = titleRemoved.slice(0, titleRemoved?.indexOf("."));
         }
@@ -55,20 +75,21 @@ async function main() {
             successOSMCount++;
         }
 
-        const priceSentences = lastItemText?.split(". ").filter(s => s.includes("£")).join(". ");
+        const priceSentences = metadata.unparsedLocationSentence?.split(". ").filter(s => s.includes("£")).join(". ");
 
-        articleIdToMetadata[card.item.id] = {
-            articleId: card.item.id,
-            title: card.title,
-            unparsedLocationSentence: lastItemText,
+        articleIdToMetadata[metadata.articleId] = {
+            articleId: metadata.articleId,
+            title: metadata.title,
+            unparsedLocationSentence: metadata.unparsedLocationSentence,
             possibleCoordinates: possibleCoordinates,
             possibleRestaurantTitle: probableRestaurantTitle,
             possibleAddress: possibleAddress,
             priceSentences,
-            seriesName: seriesBody.title,
-            seriesUri: restaurantSeriesList[0]
+            seriesName: metadata.seriesName,
+            seriesUri: metadata.seriesUri
         };
-        console.log(articleIdToMetadata[card.item.id]);
+        
+        console.log(articleIdToMetadata[metadata.articleId]);
     }
     console.log("Successfully found ", successOSMCount, "restaurants on open street map!")
     fs.writeFileSync("restaurant_reviews" + ".json", JSON.stringify(articleIdToMetadata, null, 4))
