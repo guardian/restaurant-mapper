@@ -37,7 +37,7 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             mainImageUrl: imageToUrl(card.mainImage),
         }
     });
-    if (seriesBody.pagination.uris.next) {
+    if (seriesBody.pagination.uris.next && allPages) {
         const rest = await fetchReviewCards(seriesBody.pagination.uris.next, extractorFn, allPages);
         return parsedCards.concat(rest);
     } else {
