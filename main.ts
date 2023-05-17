@@ -70,7 +70,7 @@ async function main() {
             return null;
         }
     );
-    const metadatas = marinaOLoughlinMetadatas;
+    const metadatas = [graceDentMetadatas, jayRaynerMetadatas, marinaOLoughlinMetadatas].flat();
     for (let metadata of metadatas) {
         let card = metadata.card;
         const probableRestaurantTitle = card?.title.split(",")[0] || "";
