@@ -75,6 +75,28 @@ async function main() {
         let card = metadata.card;
         const probableRestaurantTitle = card?.title.split(",")[0] || "";
         let titleRemoved = metadata.unparsedLocationSentence?.toLowerCase().replace(probableRestaurantTitle?.toLowerCase(), "")
+        const clauses = titleRemoved?.split(/(, )|\(|\. /);
+        const isTitle = (clause: string) => clause.trim().toLowerCase() === probableRestaurantTitle?.toLowerCase();
+        const isUrl = (clause: string) => clause.includes("http") || clause.includes("www.") || clause.includes(".com");
+        const isPhoneNumber = (clause: string) => clause.trim().match(/^[0-9]{3}/);
+        const isPrice = (clause: string) => clause.includes("£");
+        const isCity = (clause: string) => clause.includes("london") || clause.includes("salford");
+        let address: string[] = [];
+        for (let x of clauses ?? []) {
+            if (!x?.trim() || x === ", ") {
+                continue;
+            } else if (isTitle(x)) {
+                continue;
+            } else if (isUrl(x) || isPhoneNumber(x) || isPrice(x)) {
+                break;
+            } else if (isCity(x)) {
+                address.push(x);
+                break;
+            } else {
+                address.push(x);
+            }
+        }
+
         if (titleRemoved && titleRemoved?.indexOf(".") > -1) {
             titleRemoved = titleRemoved.slice(0, titleRemoved?.indexOf("."));
         }
@@ -96,7 +118,8 @@ async function main() {
                     break;
                 }
             }
-            possibleAddress = commaSections?.slice(0, indexCommaIndex).join(", ");
+            // possibleAddress = commaSections?.slice(0, indexCommaIndex).join(", ");
+            possibleAddress = address.join(", ");
             console.log("errrmm.. ", possibleAddress);
             possibleCoordinates = await queryNomatim(possibleAddress);
         }
