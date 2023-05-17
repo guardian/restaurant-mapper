@@ -14,7 +14,7 @@
     "csv-reader": "1.0.12"
   },
   "scripts": {
-    "start": "npx ts-node -T main.ts",
+    "start": "npx ts-node -T src/main.ts",
     "upload": "aws s3 --profile developerPlayground cp restaurant_reviews.json s3://restaurant-mapper-hack/restaurant_reviews.json"
   }
 }

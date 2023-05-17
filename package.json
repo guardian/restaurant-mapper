@@ -1,0 +1,10 @@
+{
+  "name": "article-address-parser-hack",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "parser",
+      "map-ui"
+    ]
+  }
+}
