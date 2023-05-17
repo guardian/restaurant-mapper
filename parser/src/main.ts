@@ -37,7 +37,7 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             mainImageUrl: imageToUrl(card.mainImage),
         }
     });
-    if (seriesBody.pagination.uris.next) {
+    if (seriesBody.pagination.uris.next && allPages) {
         const rest = await fetchReviewCards(seriesBody.pagination.uris.next, extractorFn, allPages);
         return parsedCards.concat(rest);
     } else {
@@ -84,9 +84,12 @@ async function main() {
         const clauses = titleRemoved?.split(/(, )|\(|\. /);
         const isTitle = (clause: string) => clause.trim().toLowerCase() === probableRestaurantTitle?.toLowerCase();
         const isUrl = (clause: string) => clause.includes("http") || clause.includes("www.") || clause.includes(".com");
-        const isPhoneNumber = (clause: string) => clause.trim().match(/^([0-9]{3}[ -][0-9]{4}[ -][0-9]{4})|([0-9]{5}[ -][0-9]{6})/);
+        const isPhoneNumber = (clause: string) => clause.trim().match(
+            /^([0-9]{3}[ -][0-9]{4}[ -][0-9]{4})|([0-9]{5}[ -][0-9]{6})|([0-9]{4}[ -][0-9]{3}[ -][0-9]{4})/
+        );
         const isPrice = (clause: string) => clause.includes("£");
         const isCity = (clause: string) => clause.includes("london") || clause.includes("salford");
+        const containsPostcode = (clause: string) => clause.match(/ [a-z]{1,2}[0-9][a-z0-9]? ?([0-9][a-z]{2})?/)
         let address: string[] = [];
         for (let x of clauses ?? []) {
             if (!x?.trim() || x === ", ") {
@@ -95,7 +98,7 @@ async function main() {
                 continue;
             } else if (isUrl(x) || isPhoneNumber(x) || isPrice(x)) {
                 break;
-            } else if (isCity(x)) {
+            } else if (isCity(x) || containsPostcode(x)) {
                 address.push(x);
                 break;
             } else {
