@@ -55,7 +55,7 @@ async function main() {
             successOSMCount++;
         }
 
-        const priceSentences = lastItemText?.split(". ").filter(s => s.includes("£")).join(".");
+        const priceSentences = lastItemText?.split(". ").filter(s => s.includes("£")).join(". ");
 
         articleIdToMetadata[card.item.id] = {
             articleId: card.item.id,
