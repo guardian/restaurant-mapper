@@ -15,6 +15,6 @@
   },
   "scripts": {
     "start": "npx ts-node -T main.ts",
-    "upload": "aws s3 --profile devPlayground cp restaurant-reviews.json s3://restaurant-mapper-hack/restaurant-reviews.json"
+    "upload": "aws s3 --profile developerPlayground cp restaurant_reviews.json s3://restaurant-mapper-hack/restaurant_reviews.json"
   }
 }
