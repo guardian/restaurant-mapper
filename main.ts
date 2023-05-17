@@ -15,12 +15,12 @@ let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {}
 
 // bodyDom.window.document.body.lastChild?.textContent
 
-async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM) => string | null): Promise<RestaurantArticleMetadata[]> {
+async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM) => string | null, allPages: boolean = true): Promise<RestaurantArticleMetadata[]> {
     let res = await fetch(seriesUri)
     console.log("URL ", seriesUri);
     const seriesBody: ListResponse = await res.json();
     const reviewCards = seriesBody.cards.filter((card) => card.cardDesignType == "Review");
-    return reviewCards.map((card) => {
+    const parsedCards: RestaurantArticleMetadata[] = reviewCards.map((card) => {
         let bodyDom = new JSDOM(card.item.body);
         const lastItemText = extractorFn(bodyDom)
             ?.replace("\n", "")
@@ -37,10 +37,16 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             mainImageUrl: imageToUrl(card.mainImage),
         }
     });
+    if (seriesBody.pagination.uris.next) {
+        const rest = await fetchReviewCards(seriesBody.pagination.uris.next, extractorFn, allPages);
+        return parsedCards.concat(rest);
+    } else {
+        return parsedCards;
+    }
 }
 
-function imageToUrl(image: MainImage): string {
-    return image.urlTemplate
+function imageToUrl(image: MainImage): string | undefined {
+    return image?.urlTemplate
         .replace("#{width}", `300`)
         .replace("&h=#{height}", "")
         .replace("#{quality}", `100`);

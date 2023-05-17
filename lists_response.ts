@@ -36,8 +36,10 @@ export interface ListResponse {
   }
   
   export interface Uris {
-    next: string
-    last: string
+    first?: string
+    last?: string
+    next?: string
+    previous?: string
   }
   
   export interface Series {
@@ -144,7 +146,7 @@ export interface ListResponse {
   }
   
   export interface Image {
-    urlTemplate: string
+    urlTemplate?: string
   }
   
   export interface SmallImage {
@@ -369,4 +371,3 @@ export interface ListResponse {
     keywords: string[]
     premium: boolean
   }
-  
