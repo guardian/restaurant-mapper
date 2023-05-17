@@ -34,15 +34,15 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             unparsedLocationSentence: lastItemText,
             seriesUri: seriesUri,
             seriesName: seriesBody.title,
-            imageUrl: imageToUrl(card.item.headerImage),
+            mainImageUrl: imageToUrl(card.mainImage),
         }
     });
 }
 
 function imageToUrl(image: MainImage): string {
     return image.urlTemplate
-        .replace("#{width}", `${image.width}`)
-        .replace("#{height}", `${image.height}`)
+        .replace("#{width}", `300`)
+        .replace("&h=#{height}", "")
         .replace("#{quality}", `100`);
 }
 
@@ -96,16 +96,14 @@ async function main() {
         const priceSentences = metadata.unparsedLocationSentence?.split(". ").filter(s => s.includes("£")).join(". ");
 
         articleIdToMetadata[metadata.articleId] = {
-            articleId: metadata.articleId,
-            title: metadata.title,
-            unparsedLocationSentence: metadata.unparsedLocationSentence,
+            ...metadata,
             possibleCoordinates: possibleCoordinates,
             possibleRestaurantTitle: probableRestaurantTitle,
             possibleAddress: possibleAddress,
             priceSentences,
-            seriesName: metadata.seriesName,
-            seriesUri: metadata.seriesUri
         };
+
+        delete articleIdToMetadata[metadata.articleId].card;
         
         console.log(articleIdToMetadata[metadata.articleId]);
     }
