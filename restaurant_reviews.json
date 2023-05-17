@@ -1,0 +1,232 @@
+{
+    "food/2023/may/12/home-dumfries-grace-dent-restaurant-review": {
+        "articleId": "food/2023/may/12/home-dumfries-grace-dent-restaurant-review",
+        "title": "Home, Dumfries: ‘It refuses to be up itself in any way’ – restaurant review",
+        "unparsedLocationSentence": "Home 50 White Sands, Dumfries, 07896 355074. Open Thurs & Fri only, 5-10pm. Seven-course tasting menu only, £45 a head, plus drinks and service",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Home",
+        "possibleAddress": "50 white sands, dumfries",
+        "priceSentences": "Seven-course tasting menu only, £45 a head, plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/may/05/papi-london-e8-restaurant-review-grace-dent": {
+        "articleId": "food/2023/may/05/papi-london-e8-restaurant-review-grace-dent",
+        "title": "Papi, London E8: ‘Cooking worth waiting for’ – restaurant review",
+        "unparsedLocationSentence": "Papi 1F Mentmore Terrace, London E8, 07961 911500. Open lunch Fri-Sun, noon-3.30 (4pm Sun), dinner Weds-Thurs, 5-10pm, Fri-Sat 6-10.30pm. About £45 a head, plus drinks & service",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Papi",
+        "possibleAddress": "1f mentmore terrace, london e8",
+        "priceSentences": "About £45 a head, plus drinks & service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/apr/28/khai-khai-newcastle-restaurant-review-grace-dent": {
+        "articleId": "food/2023/apr/28/khai-khai-newcastle-restaurant-review-grace-dent",
+        "title": "Khai Khai, Newcastle: ‘Broccoli should not be this delicious’ – restaurant review",
+        "unparsedLocationSentence": "Khai Khai 29 Queen Street, Quayside, Newcastle upon Tyne NE1, 0191-261 4277. Open Mon-Thurs, noon-2.30pm, 5-10.30pm; Fri noon-11pm; Sat 9am-11pm, Sun 9am-9.30pm. From about £35 a head à la carte; “chef's feast” set meal £39; £14 set lunch and £16 set early dinner (small plate, main, lentils, and rice or bread), all plus drinks and service.",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Khai Khai",
+        "possibleAddress": "29 queen street, quayside, newcastle upon tyne ne1",
+        "priceSentences": "From about £35 a head à la carte; “chef's feast” set meal £39; £14 set lunch and £16 set early dinner (small plate, main, lentils, and rice or bread), all plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/apr/21/zapote-london-ec2-restaurant-review-grace-dent": {
+        "articleId": "food/2023/apr/21/zapote-london-ec2-restaurant-review-grace-dent",
+        "title": "Zapote, London EC2: ‘A deft mix of Brit-Mexican and something more classy’ – restaurant review",
+        "unparsedLocationSentence": "Zapote 70 Leonard Street, London EC2, 020-7613 5942. Open lunch Tues- Sat, noon-2.30pm; dinner Tues-Sat, 5.30-10pm (10.30pm Fri & Sat). From about £40 a head, plus drinks and service",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Zapote",
+        "possibleAddress": "70 leonard street, london ec2",
+        "priceSentences": "From about £40 a head, plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/apr/14/the-oyster-club-birmingham-restaurant-review-grace-dent": {
+        "articleId": "food/2023/apr/14/the-oyster-club-birmingham-restaurant-review-grace-dent",
+        "title": "The Oyster Club, Birmingham: ‘The biggest thing on the plate was the chunk of lemon’ – restaurant review",
+        "unparsedLocationSentence": "The Oyster Club 43 Temple Street, Birmingham B2, 0121 643 6070. Open Wed-Sun, noon-9pm (last orders; 9.30pm Fri & Sat, 8pm Sun). From about £60 a head à la carte, plus drinks and service",
+        "possibleCoordinates": {
+            "lat": "52.4803914",
+            "lon": "-1.8989544"
+        },
+        "possibleRestaurantTitle": "The Oyster Club",
+        "possibleAddress": "43 temple street, birmingham b2",
+        "priceSentences": "From about £60 a head à la carte, plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/apr/07/mr-pooks-kitchen-castle-douglas-dumfries-and-galloway-restaurant-review-grace-dent": {
+        "articleId": "food/2023/apr/07/mr-pooks-kitchen-castle-douglas-dumfries-and-galloway-restaurant-review-grace-dent",
+        "title": "Mr Pook’s Kitchen, Castle Douglas, Dumfries & Galloway: ‘Happiness is moments such as these’ – restaurant review",
+        "unparsedLocationSentence": "This article was amended on 10 April 2023 to correct the spelling and pronunciation of Kirkcudbright.",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Mr Pook’s Kitchen",
+        "possibleAddress": "",
+        "priceSentences": "",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/mar/31/toba-sw1-restaurant-review-grace-dent": {
+        "articleId": "food/2023/mar/31/toba-sw1-restaurant-review-grace-dent",
+        "title": "Toba, SW1: ‘The bliss is in the devilishly good detail’ – restaurant review",
+        "unparsedLocationSentence": "Toba, 1a St James's Market, London SW1, 020-7839 8659. Open Tues-Sat, lunch noon-4pm, dinner 6-11pm (11pm Fri & Sat); Sun 11.30am-4pm. From about £40 a head à la carte; set menus from £36.50-£73.50 a head, all plus drinks and service",
+        "possibleCoordinates": {
+            "lat": "51.5094179",
+            "lon": "-0.1335345"
+        },
+        "possibleRestaurantTitle": "Toba",
+        "possibleAddress": ", 1a st james's market, london sw1",
+        "priceSentences": "From about £40 a head à la carte; set menus from £36.50-£73.50 a head, all plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/mar/24/musu-manchester-restaurant-review-grace-dent": {
+        "articleId": "food/2023/mar/24/musu-manchester-restaurant-review-grace-dent",
+        "title": "Musu, Manchester: ‘Gigantically ambitious and pointedly bonkers’ – restaurant review",
+        "unparsedLocationSentence": "Musu Rational House, 64 Bridge Street, Manchester M3, 0161-883 7753. Open Wed-Sat, lunch noon-3pm, dinner 5-11pm; Sun 4-11pm. Four-course weekday set lunch £35;. seven-course kaiseki menu £110, 11-course £170; all plus drinks and service",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Musu",
+        "possibleAddress": "rational house, 64 bridge street, manchester m3",
+        "priceSentences": "Four-course weekday set lunch £35;. seven-course kaiseki menu £110, 11-course £170; all plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/mar/17/hawthorn-kew-restaurant-review-grace-dent": {
+        "articleId": "food/2023/mar/17/hawthorn-kew-restaurant-review-grace-dent",
+        "title": "Hawthorn, Kew: ‘It aims to fill and soothe’ – restaurant review",
+        "unparsedLocationSentence": "Hawthorn 14 Station Parade, Kew, 020-8940 6777. Open Tues-Sat, lunch noon-2.15pm, dinner 6-9.45pm. Lunch £45 for three courses (£50 Sat), dinner £65 for three courses, all plus drinks and service.",
+        "possibleCoordinates": {
+            "lat": "51.4772571",
+            "lon": "-0.2862155"
+        },
+        "possibleRestaurantTitle": "Hawthorn",
+        "possibleAddress": "14 station parade, kew",
+        "priceSentences": "Lunch £45 for three courses (£50 Sat), dinner £65 for three courses, all plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/mar/10/dorothy-marshall-bromley-grace-dent-restaurant-review": {
+        "articleId": "food/2023/mar/10/dorothy-marshall-bromley-grace-dent-restaurant-review",
+        "title": "Dorothy & Marshall, Bromley: ‘A menu so short, it’s hard to regard the place as much more than a cafe’ – restaurant review",
+        "unparsedLocationSentence": "Dorothy & Marshall Old Town Hall, 4 Court Street, Bromley, 020-3989 9092. Open lunch Tues-Sat, noon-3pm, dinner 6-10pm (10.30pm Fri & Sat), Sun noon-7pm. From about £40 a head à la carte, plus drinks and service",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Dorothy & Marshall",
+        "possibleAddress": "old town hall, 4 court street, bromley",
+        "priceSentences": "From about £40 a head à la carte, plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/mar/03/casa-romana-carlisle-restaurant-review-grace-dent": {
+        "articleId": "food/2023/mar/03/casa-romana-carlisle-restaurant-review-grace-dent",
+        "title": "Casa Romana, Carlisle: ‘I hope they change absolutely nothing’ – restaurant review",
+        "unparsedLocationSentence": "Casa Romana Italian Kitchen 44 Warwick Road, Carlisle, Cumbria, 01228 591969. Open Mon-Fri, lunch 11.45am-2pm, dinner 5-9pm, Sat 11.45am-9.30pm. About £30 a head à la carte; express lunch/happy hour menu, £12.75 for two courses, £16.75 for three, all plus drinks and service.",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Casa Romana",
+        "possibleAddress": "italian kitchen 44 warwick road, carlisle, cumbria",
+        "priceSentences": "About £30 a head à la carte; express lunch/happy hour menu, £12.75 for two courses, £16.75 for three, all plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/feb/24/beckford-canteen-bath-restaurant-review-grace-dent": {
+        "articleId": "food/2023/feb/24/beckford-canteen-bath-restaurant-review-grace-dent",
+        "title": "Beckford Canteen, Bath: ‘A menu that demands to be gobbled up’ – restaurant review",
+        "unparsedLocationSentence": "Beckford Canteen, 11-12 Bartlett Street, Bath, 01225 338470. Open Wed–Sun, lunch noon-4.30pm, dinner 6-11pm (Sun noon–6pm). From about £55 a head, plus drinks and service.",
+        "possibleCoordinates": {
+            "lat": "51.385386249999996",
+            "lon": "-2.3616022156472836"
+        },
+        "possibleRestaurantTitle": "Beckford Canteen",
+        "possibleAddress": ", 11-12 bartlett street, bath",
+        "priceSentences": "From about £55 a head, plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/feb/17/maresco-soho-sings-its-love-of-scotland-like-a-tipsy-proclaimer-restaurant-review": {
+        "articleId": "food/2023/feb/17/maresco-soho-sings-its-love-of-scotland-like-a-tipsy-proclaimer-restaurant-review",
+        "title": "Maresco, Soho: ‘Sings its love of Scotland like a tipsy Proclaimer’ – restaurant review",
+        "unparsedLocationSentence": "Maresco 45 Berwick Street, London W1, 020-7439 8483. Open Mon-Sat, lunch noon-3.30pm, dinner 5-11pm. From about £35 a head, plus drinks and service.",
+        "possibleCoordinates": {
+            "lat": "51.51518135",
+            "lon": "-0.13606390351334827"
+        },
+        "possibleRestaurantTitle": "Maresco",
+        "possibleAddress": "45 berwick street, london w1",
+        "priceSentences": "From about £35 a head, plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/feb/10/samphire-stanwell-house-lymington-hampshire-restaurant-review-grace-dent": {
+        "articleId": "food/2023/feb/10/samphire-stanwell-house-lymington-hampshire-restaurant-review-grace-dent",
+        "title": "Samphire, Lymington, Hampshire: ‘An eruption in a Cath Kidston outlet’ – restaurant review",
+        "unparsedLocationSentence": "Samphire Stanwell House, 14-15 High Street, Lymington, Hampshire, 01590 677123. Open all week, lunch noon-2pm (3pm Sun), dinner 6-9pm. About £50 a head à la carte; £75 eight-course tasting menu, both plus drinks and service",
+        "possibleCoordinates": {
+            "lat": "50.7586576",
+            "lon": "-1.5391984980750264"
+        },
+        "possibleRestaurantTitle": "Samphire",
+        "possibleAddress": "stanwell house, 14-15 high street, lymington, hampshire",
+        "priceSentences": "About £50 a head à la carte; £75 eight-course tasting menu, both plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/feb/03/notto-london-w1-pasta-is-safe-in-these-chefs-hands": {
+        "articleId": "food/2023/feb/03/notto-london-w1-pasta-is-safe-in-these-chefs-hands",
+        "title": "Notto, London W1: ‘Pasta is safe in these chefs’ hands’ – restaurant review",
+        "unparsedLocationSentence": "Notto 198 Piccadilly, London W1, 020-3034 2190. Open Mon-Sat, lunch noon-3pm, dinner 5-10pm; Sun noon-8pm. About £30 a head for three courses, plus drinks and service",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Notto",
+        "possibleAddress": "198 piccadilly, london w1",
+        "priceSentences": "About £30 a head for three courses, plus drinks and service",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/jan/27/the-woolpack-slad-gloucestershire-fancy-but-hearty-food-restaurant-review": {
+        "articleId": "food/2023/jan/27/the-woolpack-slad-gloucestershire-fancy-but-hearty-food-restaurant-review",
+        "title": "The Woolpack, Slad, Gloucestershire: ‘Fancy but hearty food’ – restaurant review",
+        "unparsedLocationSentence": "The Woolpack Slad Road, Stroud, Gloucestershire, 01452 813429. Open lunch Tues-Sun, noon-2.30pm (3pm Sun), dinner Tues-Sat, 6-9pm. From about £45 a head, plus drinks and service.",
+        "possibleCoordinates": {
+            "lat": "51.7503303",
+            "lon": "-2.2044866"
+        },
+        "possibleRestaurantTitle": "The Woolpack",
+        "possibleAddress": "slad road, stroud, gloucestershire",
+        "priceSentences": "From about £45 a head, plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/jan/20/restaurant-st-barts-london-ec1-restaurant-review-grace-dent": {
+        "articleId": "food/2023/jan/20/restaurant-st-barts-london-ec1-restaurant-review-grace-dent",
+        "title": "Restaurant St Barts, London EC1: ‘A place to take the food obsessive in your life’ – restaurant review",
+        "unparsedLocationSentence": "Restaurant St Barts 63 Bartholomew Close, London EC1, 020-4547 7985. Lunch Wed-Fri, noon-2pm; dinner Wed-Thur, 6-7.30pm (last sitting), Fri & Sat 6-8pm (last sitting). Set menu only, lunch £60 for seven courses, dinner £120 for 15 courses, both plus drinks and service.",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Restaurant St Barts",
+        "possibleAddress": "63 bartholomew close, london ec1",
+        "priceSentences": "Set menu only, lunch £60 for seven courses, dinner £120 for 15 courses, both plus drinks and service.",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2023/jan/13/jam-delish-london-vegan-restaurant-review-grace-dent": {
+        "articleId": "food/2023/jan/13/jam-delish-london-vegan-restaurant-review-grace-dent",
+        "title": "Jam Delish, London N1: ‘A gamechanger for vegan restaurants’ – restaurant review",
+        "unparsedLocationSentence": "Jam Delish 1 Tolpuddle Street, London N1. Open Tues-Fri 5-10.30pm, Sat noon-10.30pm, Sun 1-7pm. From about £40 a head à la carte (three-course set menu £34), plus drinks and service.\n \n  The final episode in the fourth series of Grace's Comfort Eating podcast is released on Tuesday 17 January. Listen to it here.",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "Jam Delish",
+        "possibleAddress": "",
+        "priceSentences": "From about £40 a head à la carte (three-course set menu £34), plus drinks and service.\n \n  The final episode in the fourth series of Grace's Comfort Eating podcast is released on Tuesday 17 January",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    },
+    "food/2022/dec/30/they-begged-me-to-keep-it-secret-grace-dents-favourite-restaurants-of-2022": {
+        "articleId": "food/2022/dec/30/they-begged-me-to-keep-it-secret-grace-dents-favourite-restaurants-of-2022",
+        "title": "‘They begged me to keep it secret’ – Grace Dent’s favourite restaurants of 2022",
+        "unparsedLocationSentence": "Finally, if there has to be one “winner winner Grace Dent's dinner”, it has to be The Dog & Gun in Skelton, a country pub with an ancient heart serving a fancy menu without airs and graces. Take me back to its twice-baked torpenhow souffle with a liberal grating of black truffle. Yes, 2022 may have been stingy at times, but overall it was delicious, so here’s to more heartburn in 2023.",
+        "possibleCoordinates": null,
+        "possibleRestaurantTitle": "‘They begged me to keep it secret’ – Grace Dent’s favourite restaurants of 2022",
+        "possibleAddress": "",
+        "priceSentences": "",
+        "seriesName": "Grace Dent on restaurants",
+        "seriesUri": "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants"
+    }
+}
