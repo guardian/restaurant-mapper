@@ -5,6 +5,9 @@ export interface RestaurantArticleMetadata {
     title: string;
     seriesUri?: string; // The series this article comes from. e.g https://mobile.guardianapis.com/lists/tag/food/series/grace-dent-on-restaurants
     seriesName?: string; // The series this article comes from. e.g Grace Dent on Restaurants
+    
+    // Images
+    mainImageUrl?: string;
 
     // Removed from object before export, used internally while parsing
     card?: Card;

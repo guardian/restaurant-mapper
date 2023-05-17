@@ -1,4 +1,4 @@
-import { ListResponse } from "./lists_response";
+import { ListResponse, MainImage } from "./lists_response";
 import { JSDOM } from "jsdom";
 import * as fs from "fs";
 import { RestaurantArticleMetadata } from "./restaurant_metadata";
@@ -33,9 +33,17 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             card: card,
             unparsedLocationSentence: lastItemText,
             seriesUri: seriesUri,
-            seriesName: seriesBody.title
+            seriesName: seriesBody.title,
+            imageUrl: imageToUrl(card.item.headerImage),
         }
     });
+}
+
+function imageToUrl(image: MainImage): string {
+    return image.urlTemplate
+        .replace("#{width}", `${image.width}`)
+        .replace("#{height}", `${image.height}`)
+        .replace("#{quality}", `100`);
 }
 
 async function main() {
