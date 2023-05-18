@@ -57,11 +57,15 @@ async function main() {
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
         (bodyDom) => {
             const lastChild = bodyDom.window.document.body.lastChild?.textContent;
-            if (lastChild.match(/Food [0-9]\/[0-9]{2}/)) {
-                return bodyDom.window.document.body.children[bodyDom.window.document.body.children.length - 1].textContent
-            } else {
-                return lastChild;
+            for (let i = bodyDom.window.document.body.children.length - 1; i > 0; i--) {
+                const child = bodyDom.window.document.body.children[i].textContent;
+                if (lastChild.match(/[Ff]ood [0-9]\/[0-9]{2}/) || lastChild.match(/article was amended/)) {
+                    continue;
+                } else {
+                    return child;
+                }
             }
+            return null;
         }
     );
     const jayRaynerMetadatas = fetchReviewCards(
@@ -102,7 +106,12 @@ async function batchPromises<T, V>(items: V[], f: (x: V) => Promise<T>, batchSiz
 
 async function processMetadata(metadata: RestaurantArticleMetadata): Promise<RestaurantArticleMetadata> {
     let card = metadata.card;
-    const probableRestaurantTitle = card?.title.split(",")[0] || "";
+    const probableRestaurantTitle = card?.title.split(",")[0]
+        .replace("Restaurant review: ", "")
+        .replace("Jay Rayner reviews ", "")
+        .replace("Restaurant: ", "")
+        .replace("Restaurants: ", "")
+        || "";
     let titleRemoved = metadata.unparsedLocationSentence?.toLowerCase().replace(probableRestaurantTitle?.toLowerCase(), "")
     const clauses = titleRemoved?.split(/(, )|\(|\. /);
     const isTitle = (clause: string) => clause.trim().toLowerCase() === probableRestaurantTitle?.toLowerCase();
