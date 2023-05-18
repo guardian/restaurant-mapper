@@ -4,8 +4,6 @@ import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, 
 import { RestaurantReview } from "./restaurant_review";
 
 type MapLogicProps = {
-  mapLoaded: boolean;
-  setMapLoaded: React.Dispatch<any>;
   reviews: RestaurantReview[];
 };
 
@@ -41,7 +39,7 @@ export function MapLogic(props: MapLogicProps) {
             const coords: L.LatLngExpression = [parseFloat(review.possibleCoordinates.lat), parseFloat(review.possibleCoordinates.lon)]
             const icon = review.seriesName?.startsWith("Grace Dent") ? graceIcon
             : (review.seriesName?.startsWith("Jay Rayner") ? jayIcon : unknownIcon)
-            return <Marker position={coords} icon={icon}>
+            return <Marker position={coords} icon={icon} key={"marker_" + review.articleId}>
             <Popup>
                 <a href={`https://www.theguardian.com/${review.articleId}`}>
                 {review.title}

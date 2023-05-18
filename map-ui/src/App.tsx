@@ -9,15 +9,19 @@ import { Sidebar } from './Sidebar';
 import { RestaurantReview } from './restaurant_review';
 
 function App() {
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [jayRadarActivated, setJayRadarActivated] = useState(false);
-  const [reviews, setReviews] = useState<RestaurantReview[] | null>(null);
+  const [reviewsByYear, setReviewsByYear] = useState<Record<string, RestaurantReview[]>>({});
+  const [selectedYear, setSelectedYear] = useState<string>("2023");
+  const [yearOptions, setYearOptions] = useState<string[]>([]);
   useEffect(() => {
     async function getReviews() {
       const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
       const json: { [articleId: string]: RestaurantReview} = await s3Response.json();
       const reviewsByYear = groupReviewsByYear(json);
-      setReviews(reviewsByYear["2023"]);
+      setYearOptions(Object.keys(reviewsByYear));
+      setReviewsByYear(reviewsByYear);
+      setLoading(false);
     }
     getReviews();
   }, []);
@@ -27,7 +31,11 @@ function App() {
         jayRadarActivated={jayRadarActivated}
         setJayRadarActivated={setJayRadarActivated}
       />
-      <FilterBar/>
+      <FilterBar
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear}
+        yearOptions={yearOptions}
+      />
       <div className="belowBars">
         <Sidebar/>
         <MapContainer id="map-container" center={[50, 0]} zoom={12} scrollWheelZoom={true}>
@@ -35,11 +43,9 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          {reviews ? <MapLogic
-            mapLoaded={mapLoaded}
-            setMapLoaded={setMapLoaded}
-            reviews={reviews}
-          ></MapLogic> : null}
+          {loading ? <p>Loading...</p> : <MapLogic
+            reviews={reviewsByYear[selectedYear] || []}
+          ></MapLogic>}
         </MapContainer>
       </div>
     </div>
