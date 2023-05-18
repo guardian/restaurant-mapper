@@ -53,3 +53,15 @@
 .sidebar {
   width: 400px;
 }
+
+.titleBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 1px solid black;
+}
+
+.titleBar img {
+  padding: 20px;
+}
+
