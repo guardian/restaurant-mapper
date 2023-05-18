@@ -9,9 +9,13 @@ import { Sidebar } from './Sidebar';
 
 function App() {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [jayRadarActivated, setJayRadarActivated] = useState(false);
   return (
     <div className="App">
-      <TitleBar/>
+      <TitleBar
+        jayRadarActivated={jayRadarActivated}
+        setJayRadarActivated={setJayRadarActivated}
+      />
       <FilterBar/>
       <div className="belowBars">
         <Sidebar/>
