@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -38,6 +40,16 @@
 }
 
 .leaflet-container {
-  width: 100%;
+  width: calc(100% - 400px);
   height: 90vh;
+}
+
+.belowBars {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  width: 400px;
 }

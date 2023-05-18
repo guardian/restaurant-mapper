@@ -1,5 +1,5 @@
 export function Sidebar() {
-    return <div style={{width: "200px", height: "100vh"}}>
+    return <div className="sidebar">
         TODO: Restaurant listings go here
     </div>
 }

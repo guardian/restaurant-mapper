@@ -11,7 +11,6 @@ function App() {
   const [mapLoaded, setMapLoaded] = useState(false);
   return (
     <div className="App">
-      <h1>Map here?</h1>
       <TitleBar/>
       <FilterBar/>
       <div className="belowBars">
