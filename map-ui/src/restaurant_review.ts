@@ -22,4 +22,5 @@ export interface RestaurantReview {
       lon: string;
     }
     webPublicationDate: string;
+    body: string;
 }
