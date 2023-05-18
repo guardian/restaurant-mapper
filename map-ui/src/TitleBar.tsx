@@ -1,5 +1,5 @@
 import gRoundelLogo from './Roundel_ white_on_blue_1.svg';
-import jayRoundel from './jay_roundel1.png';
+import jayRoundel from './reviewerImages/jay_roundel1.png';
 import radarLogo from './radar1.svg';
 import sonarAudioFile from './sonar-ping-95840.mp3';
 
