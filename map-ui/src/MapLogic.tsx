@@ -54,5 +54,6 @@ export function MapLogic(props: MapLogicProps) {
         return <></>
       }
     })}
+    {props.currentLocation ? <Marker position={[props.currentLocation?.lat, props.currentLocation?.lon]}></Marker>: null}
   </MapContainer>
 }

@@ -2,6 +2,7 @@ import gRoundelLogo from './Roundel_ white_on_blue_1.svg';
 import jayRoundel from './reviewerImages/jay_roundel1.png';
 import radarLogo from './radar1.svg';
 import sonarAudioFile from './sonar-ping-95840.mp3';
+import {useEffect} from 'react';
 
 export interface TitleBarProps {
     jayRadarActivated: boolean;
@@ -10,6 +11,15 @@ export interface TitleBarProps {
 
 export function TitleBar(props: TitleBarProps) {
     let radarAudio = new Audio(sonarAudioFile);
+
+    useEffect(() => {
+        setInterval(() => {
+            if (props.jayRadarActivated) {
+                radarAudio.play();
+            }
+        }, 5000);
+    });
+    
 
     return <header className="titleBar">
         <img className="guRoundel" src={props.jayRadarActivated ? jayRoundel : gRoundelLogo}/>

@@ -31,7 +31,7 @@ function App() {
         navigator.geolocation.getCurrentPosition((position) => {
           setCurrentLocation({ lat: position.coords.latitude, lon: position.coords.longitude})
         });
-      }, 4000);
+      }, 5000);
     }
   }, []);
   return (
