@@ -45,7 +45,10 @@ export function MapLogic(props: MapLogicProps) {
           : (review.seriesName?.startsWith("Jay Rayner") ? jayIcon : unknownIcon)
         return <Marker position={coords} icon={icon} key={"marker_" + review.articleId}>
           <Popup>
-            <h2>{review.title}</h2>
+            <h2 onClick={(_) => {
+              const sidebarArticle = document.getElementById(review.articleId);
+              sidebarArticle?.scrollIntoView();
+            }}>{review.title}</h2>
             {review.headerImageUrl ? <img src={review.headerImageUrl} /> : null}
             <p>{review.priceSentences}</p>
             <p>
