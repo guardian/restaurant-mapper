@@ -44,6 +44,10 @@
   height: 90vh;
 }
 
+.leaflet-popup-content img {
+  width: 100%;
+}
+
 .belowBars {
   width: 100%;
   display: flex;
