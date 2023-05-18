@@ -5,7 +5,8 @@ export interface FilterBarProps {
 }
 
 export function FilterBar(props: FilterBarProps) {
-    return <div style={{height: "80px", width: "100vw"}}>
+    return <div className="filterBar">
+        <label>Year: </label>
         <select value={props.selectedYear} onChange={(e) => props.setSelectedYear(e.target.value)}>
             {
                 props.yearOptions.map((year) => <option value={year}>{year}</option>)

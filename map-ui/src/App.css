@@ -72,7 +72,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #ddd;
   height: 60px;
   background-color: white;
 }
@@ -99,6 +99,22 @@ body {
   filter: brightness(3)
 }
 
+.filterBar {
+  min-height: 40px;
+  border-bottom: 1px solid #ddd;
+}
+
+.filterBar select {
+  border: 2px solid #ddd;
+  background-color: white;
+  color: black;
+  border-radius: 20px;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 10px;
+}
+
 @media (prefers-color-scheme: dark) {
 
   body {
@@ -108,10 +124,20 @@ body {
 
   .titleBar {
     background-color: black;
-    border-bottom-color: white;
+    border-bottom-color: #444;
   }
 
   .titleBar h1 {
+    color: white;
+  }
+
+  .filterBar {
+    border-bottom-color: #444;
+  }
+
+  .filterBar select {
+    border-color: #444;
+    background-color: black;
     color: white;
   }
 }
