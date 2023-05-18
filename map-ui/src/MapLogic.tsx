@@ -4,7 +4,8 @@ import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, 
 import { RestaurantReview } from "./restaurant_review";
 
 type MapLogicProps = {
-  reviews: RestaurantReview[];
+    currentLocation: {lat: number, lon: number} | null;
+    reviews: RestaurantReview[];
 };
 
 const jayIcon = L.icon({

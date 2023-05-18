@@ -14,6 +14,7 @@ function App() {
   const [reviewsByYear, setReviewsByYear] = useState<Record<string, RestaurantReview[]>>({});
   const [selectedYear, setSelectedYear] = useState<string>("2023");
   const [yearOptions, setYearOptions] = useState<string[]>([]);
+  const [currentLocation, setCurrentLocation] = useState<{lat: number, lon: number} | null>(null);
   useEffect(() => {
     async function getReviews() {
       const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
@@ -24,6 +25,14 @@ function App() {
       setLoading(false);
     }
     getReviews();
+    if (navigator.geolocation) {
+      setInterval(() => {
+        console.log("polling for location...");
+        navigator.geolocation.getCurrentPosition((position) => {
+          setCurrentLocation({ lat: position.coords.latitude, lon: position.coords.longitude})
+        });
+      }, 4000);
+    }
   }, []);
   return (
     <div className="App">
@@ -39,6 +48,7 @@ function App() {
       <div className="belowBars">
         <Sidebar reviews={reviewsByYear[selectedYear]} />
           {loading ? <p>Loading...</p> : <MapLogic
+            currentLocation={currentLocation}
             reviews={reviewsByYear[selectedYear] || []}
           ></MapLogic>}
       </div>
