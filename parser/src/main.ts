@@ -33,6 +33,9 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             seriesUri: seriesUri,
             seriesName: seriesBody.title,
             mainImageUrl: imageToUrl(card.mainImage),
+            headerImageUrl: imageToUrl(card.item.headerImage),
+            displayImageUrls: card.item.displayImages.map(imageToUrl),
+            bodyImageUrls: card.item.bodyImages.map((x) => imageToUrl(x as MainImage)),
             webPublicationDate: card.item.webPublicationDate,
         }
     });
@@ -45,10 +48,14 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
 }
 
 function imageToUrl(image: MainImage): string | undefined {
-    return image?.urlTemplate
-        .replace("#{width}", `300`)
-        .replace("&h=#{height}", "")
-        .replace("#{quality}", `100`);
+    if (image?.urlTemplate.match(/#{width}/)) {
+        return image?.urlTemplate
+            .replace("#{width}", `600`)
+            .replace("&h=#{height}", "")
+            .replace("#{quality}", `100`);
+    } else {
+        return image?.urlTemplate.concat("?width=600&quality=85&dpr=1&s=none");
+    }
 }
 
 async function main() {
