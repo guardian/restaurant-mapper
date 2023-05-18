@@ -7,6 +7,7 @@ import { TitleBar } from './TitleBar';
 import { FilterBar } from './FilterBar';
 import { Sidebar } from './Sidebar';
 import { RestaurantReview } from './restaurant_review';
+import jaydarImage from './jaydar1.png';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ function App() {
         setSelectedYear={setSelectedYear}
         yearOptions={yearOptions}
       />
-      <div className="belowBars">
+      <div className={!jayRadarActivated ? "belowBars" : "belowBars jaydar"}>
         <Sidebar reviews={reviewsByYear[selectedYear]} />
           {loading ? <p>Loading...</p> : <MapLogic
             jayOnly={jayRadarActivated}
