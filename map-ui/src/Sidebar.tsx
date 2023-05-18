@@ -8,7 +8,7 @@ export function Sidebar(props: SidebarProps) {
     return <div className="sidebar">
         {
             props.reviews ? props.reviews.map((review) => {
-                return <div key={"sidebar_review_" + review.articleId}>
+                return <div key={"sidebar_review_" + review.articleId} id={review.articleId}>
                     <h2>{review.title}</h2>
                     {review.headerImageUrl ? <img src={review.headerImageUrl} /> : null}
                     <p>{review.priceSentences}</p>
