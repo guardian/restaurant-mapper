@@ -15,6 +15,11 @@
   }
 }
 
+@font-face {
+  font-family: GH Guardian Headline;
+  src: url("https://assets.guim.co.uk/static/frontend/fonts/guardian-headline/noalts-not-hinted/GHGuardianHeadline-Bold.woff2?http3=true")
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -63,9 +68,18 @@
   flex-direction: row;
   justify-content: flex-start;
   border-bottom: 1px solid black;
+  height: 60px;
+}
+
+.titleBar h1 {
+  font-family: GH Guardian Headline,Guardian Egyptian Web,Georgia,serif;
+  font-size: 36px;
+  margin-top: 8px;
 }
 
 .titleBar img {
-  padding: 20px;
+  padding: 10px;
+  margin-right: 10px;
+  height: 40px;
 }
 
