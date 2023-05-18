@@ -37,6 +37,7 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             displayImageUrls: card.item.displayImages.map(imageToUrl),
             bodyImageUrls: card.item.bodyImages.map((x) => imageToUrl(x as MainImage)),
             webPublicationDate: card.item.webPublicationDate,
+            body: card.item.body,
         }
     });
     if (seriesBody.pagination.uris.next && allPages) {

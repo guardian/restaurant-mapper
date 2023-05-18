@@ -25,4 +25,5 @@ export interface RestaurantArticleMetadata {
         lon: string;
     }
     webPublicationDate: string
+    body: string
 }
