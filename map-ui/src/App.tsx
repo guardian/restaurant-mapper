@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     async function getReviews() {
       const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
-      const json: { [articleId: string]: RestaurantReview} = await s3Response.json();
+      const json: { [articleId: string]: RestaurantReview } = await s3Response.json();
       const reviewsByYear = groupReviewsByYear(json);
       setYearOptions(Object.keys(reviewsByYear));
       setReviewsByYear(reviewsByYear);
@@ -38,15 +38,9 @@ function App() {
       />
       <div className="belowBars">
         <Sidebar reviews={reviewsByYear[selectedYear]} />
-        <MapContainer id="map-container" center={[50, 0]} zoom={12} scrollWheelZoom={true}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
           {loading ? <p>Loading...</p> : <MapLogic
             reviews={reviewsByYear[selectedYear] || []}
           ></MapLogic>}
-        </MapContainer>
       </div>
     </div>
   );
@@ -54,8 +48,8 @@ function App() {
 
 function groupReviewsByYear(reviewsMap: Record<string, RestaurantReview>): Record<string, RestaurantReview[]> {
   let years: Set<string> = new Set();
-  let reviewsByYear: Record<string, RestaurantReview[]> = {};
-  
+  let reviewsByYear: Record<string, RestaurantReview[]> = {"All": []};
+
 
   for (const articleId in reviewsMap) {
     const review = reviewsMap[articleId];
@@ -66,6 +60,7 @@ function groupReviewsByYear(reviewsMap: Record<string, RestaurantReview>): Recor
         reviewsByYear[year] = [];
       }
       reviewsByYear[year].push(review);
+      reviewsByYear["All"].push(review);
     }
   }
   return reviewsByYear;
