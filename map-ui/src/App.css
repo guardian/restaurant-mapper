@@ -67,9 +67,15 @@ body {
 }
 
 .sidebar {
-  width: 400px;
+  width: 600px;
   height: 100%;
   overflow-y: scroll;
+}
+
+@media screen and (max-width: 800px) {
+  .sidebar {
+    display: none;
+  }
 }
 
 .titleBar {
