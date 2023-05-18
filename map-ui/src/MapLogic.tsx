@@ -4,6 +4,7 @@ import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, 
 import { RestaurantReview } from "./restaurant_review";
 
 type MapLogicProps = {
+    jayOnly: boolean;
     currentLocation: {lat: number, lon: number} | null;
     reviews: RestaurantReview[];
 };
@@ -35,7 +36,9 @@ export function MapLogic(props: MapLogicProps) {
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
-    {props.reviews.map((review) => {
+    {props.reviews
+    .filter((review) => { if (props.jayOnly) { return review.seriesName?.startsWith("Jay") } else { return true }})
+    .map((review) => {
       if (review.possibleCoordinates) {
         const coords: L.LatLngExpression = [parseFloat(review.possibleCoordinates.lat), parseFloat(review.possibleCoordinates.lon)]
         const icon = review.seriesName?.startsWith("Grace Dent") ? graceIcon

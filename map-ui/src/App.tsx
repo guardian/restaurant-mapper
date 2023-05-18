@@ -48,6 +48,7 @@ function App() {
       <div className="belowBars">
         <Sidebar reviews={reviewsByYear[selectedYear]} />
           {loading ? <p>Loading...</p> : <MapLogic
+            jayOnly={jayRadarActivated}
             currentLocation={currentLocation}
             reviews={reviewsByYear[selectedYear] || []}
           ></MapLogic>}
