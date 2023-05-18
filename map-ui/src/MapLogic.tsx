@@ -22,16 +22,19 @@ export function MapLogic(props: MapLogicProps) {
             iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/JayBlueRound.svg',
             iconSize: [64, 100],
             iconAnchor: [32, 100],
+            popupAnchor: [0, -90],
         });
         const graceIcon = L.icon({
             iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/GraceBlueRound.svg',
             iconSize: [64, 100],
             iconAnchor: [32, 100],
+            popupAnchor: [0, -90],
         });
         const unknownIcon = L.icon({
             iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/UnknownBlueRound.svg',
             iconSize: [64, 100],
             iconAnchor: [32, 100],
+            popupAnchor: [0, -90],
         });
         const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
         const articleAddresses = await s3Response.json();
@@ -49,4 +52,3 @@ export function MapLogic(props: MapLogicProps) {
     }, []);
     return <></>
 }
-  
