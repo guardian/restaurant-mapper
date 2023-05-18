@@ -37,7 +37,7 @@ function App() {
         yearOptions={yearOptions}
       />
       <div className="belowBars">
-        <Sidebar/>
+        <Sidebar reviews={reviewsByYear[selectedYear]} />
         <MapContainer id="map-container" center={[50, 0]} zoom={12} scrollWheelZoom={true}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
