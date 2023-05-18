@@ -9,6 +9,11 @@
   pointer-events: none;
 }
 
+body {
+  background-color: white;
+  color: black;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -69,17 +74,36 @@
   justify-content: flex-start;
   border-bottom: 1px solid black;
   height: 60px;
+  background-color: white;
 }
 
 .titleBar h1 {
   font-family: GH Guardian Headline,Guardian Egyptian Web,Georgia,serif;
   font-size: 36px;
   margin-top: 8px;
+  color: black;
 }
 
 .titleBar img {
   padding: 10px;
   margin-right: 10px;
   height: 40px;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  .titleBar {
+    background-color: black;
+    border-bottom-color: white;
+  }
+
+  .titleBar h1 {
+    color: white;
+  }
 }
 
