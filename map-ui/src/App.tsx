@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
@@ -10,6 +10,14 @@ import { Sidebar } from './Sidebar';
 function App() {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [jayRadarActivated, setJayRadarActivated] = useState(false);
+  const [reviews, setReviews] = useState(null);
+  useEffect(() => {
+    async function getReviews() {
+      const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
+      setReviews(await s3Response.json());
+    }
+    getReviews();
+  }, []);
   return (
     <div className="App">
       <TitleBar
@@ -27,6 +35,7 @@ function App() {
           <MapLogic
             mapLoaded={mapLoaded}
             setMapLoaded={setMapLoaded}
+            restaurantReviews={reviews ?? []}
           ></MapLogic>
         </MapContainer>
       </div>
