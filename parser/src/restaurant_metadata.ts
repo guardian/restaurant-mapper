@@ -24,4 +24,5 @@ export interface RestaurantArticleMetadata {
         lat: string;
         lon: string;
     }
+    webPublicationDate: string
 }

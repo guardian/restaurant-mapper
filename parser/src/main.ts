@@ -33,6 +33,7 @@ async function fetchReviewCards(seriesUri: string, extractorFn: (bodyDom: JSDOM)
             seriesUri: seriesUri,
             seriesName: seriesBody.title,
             mainImageUrl: imageToUrl(card.mainImage),
+            webPublicationDate: card.item.webPublicationDate,
         }
     });
     if (seriesBody.pagination.uris.next && allPages) {
@@ -56,10 +57,13 @@ async function main() {
     const graceDentMetadatas = fetchReviewCards(
         "https://mobile.guardianapis.com/uk/lists/tag/food/series/grace-dent-on-restaurants",
         (bodyDom) => {
-            const lastChild = bodyDom.window.document.body.lastChild?.textContent;
             for (let i = bodyDom.window.document.body.children.length - 1; i > 0; i--) {
                 const child = bodyDom.window.document.body.children[i].textContent;
-                if (lastChild.match(/[Ff]ood [0-9]\/[0-9]{2}/) || lastChild.match(/article was amended/)) {
+                if (child.match(/[Ff]ood [0-9]\/[0-9]{2}/)
+                    || child.match(/article was amended/)
+                    || child.match(/^[Tt]he next episode/)
+                    || child.match(/^[Tt]he guardian at 200/)
+                   ) {
                     continue;
                 } else {
                     return child;
@@ -84,10 +88,17 @@ async function main() {
             return null;
         }
     );
+    let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } =
+        JSON.parse(fs.readFileSync('restaurant_reviews.json', { encoding: 'utf8' }));
     const metadatas = await Promise.all([graceDentMetadatas, jayRaynerMetadatas, marinaOLoughlinMetadatas]);
-    const processedMetadata = await batchPromises(metadatas.flat(), processMetadata, 10);
-    let articleIdToMetadata: { [articleId: string]: RestaurantArticleMetadata } = {};
-    processedMetadata.map(x => articleIdToMetadata[x.articleId] = x);
+    const processedMetadata = await batchPromises(metadatas.flat(), processMetadata, 2);
+    processedMetadata.map(x => {
+        const oldMetadata = articleIdToMetadata[x.articleId];
+        articleIdToMetadata[x.articleId] = {
+            ...x,
+            possibleCoordinates: oldMetadata.possibleCoordinates,
+        }
+    });
     const successOSMCount = processedMetadata.filter((x => x.possibleCoordinates)).length;
     console.log("Successfully found ", successOSMCount, "restaurants on open street map!")
     fs.writeFileSync("restaurant_reviews" + ".json", JSON.stringify(articleIdToMetadata, null, 4))
@@ -104,7 +115,7 @@ async function batchPromises<T, V>(items: V[], f: (x: V) => Promise<T>, batchSiz
     }
 }
 
-async function processMetadata(metadata: RestaurantArticleMetadata): Promise<RestaurantArticleMetadata> {
+const processMetadata = async (metadata: RestaurantArticleMetadata): Promise<RestaurantArticleMetadata> => {
     let card = metadata.card;
     const probableRestaurantTitle = card?.title.split(",")[0]
         .replace("Restaurant review: ", "")
@@ -161,7 +172,8 @@ async function processMetadata(metadata: RestaurantArticleMetadata): Promise<Res
         }
         // possibleAddress = commaSections?.slice(0, indexCommaIndex).join(", ");
         possibleAddress = address.join(", ");
-        possibleCoordinates = await queryNomatim(possibleAddress);
+        // nominatim have blocked us :(
+        // possibleCoordinates = await queryNomatim(possibleAddress);
     }
 
     const priceSentences = metadata.unparsedLocationSentence?.split(". ").filter(s => s.includes("£")).join(". ");
