@@ -92,8 +92,12 @@ main();
 
 async function batchPromises<T, V>(items: V[], f: (x: V) => Promise<T>, batchSize: number): Promise<T[]> {
     const batch: T[] = await Promise.all(items.slice(0, batchSize).map(f));
-    const rest = await batchPromises(items.slice(batchSize), f, batchSize);
-    return batch.concat(rest);
+    const rest = items.slice(batchSize);
+    if (rest.length === 0) {
+        return batch;
+    } else {
+        return batch.concat(await batchPromises(rest, f, batchSize));
+    }
 }
 
 async function processMetadata(metadata: RestaurantArticleMetadata): Promise<RestaurantArticleMetadata> {
