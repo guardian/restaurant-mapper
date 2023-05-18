@@ -125,6 +125,7 @@ body {
 }
 
 .titleBar .guRoundel {
+  box-sizing: content-box;
   padding: 10px;
   margin-right: 10px;
   height: 40px;
