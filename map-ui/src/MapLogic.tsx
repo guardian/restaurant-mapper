@@ -11,7 +11,7 @@ export function MapLogic(props: MapLogicProps) {
     const map = useMap();
     useEffect(() => {
         console.log("Loading map?");
-        map.setView([51.505, -0.09], 6);
+        map.setView([53.505, -6.1], 7);
         props.setMapLoaded(true);
         const loadMap = async () => {
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -38,15 +38,31 @@ export function MapLogic(props: MapLogicProps) {
         });
         const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
         const articleAddresses = await s3Response.json();
+        let markers: Record<string, any> = {};
+        let years: Set<string> = new Set();
         for (const articleKey in articleAddresses) {
             const data = articleAddresses[articleKey];
             if (data && data.possibleCoordinates) {
             const icon = data.seriesName?.startsWith("Grace Dent") ? graceIcon
                         : (data.seriesName?.startsWith("Jay Rayner") ? jayIcon : unknownIcon)
-            L.marker([data.possibleCoordinates?.lat, data.possibleCoordinates?.lon], {icon: icon}).addTo(map)
-                .bindPopup(`<a href="https://theguardian.com/${data.articleId}">${data.title}</a>: ${data.priceSentences}`);
+            const year = data.webPublicationDate.substring(0, 4);
+            years.add(year);
+            if (!markers[year]) {
+                markers[year] = [];
+            }
+            markers[year].push(L.marker([data.possibleCoordinates?.lat, data.possibleCoordinates?.lon], {icon: icon})
+                                .bindPopup(`<a href="https://theguardian.com/${data.articleId}">${data.title}</a>: ${data.priceSentences}`));
             }
         }
+        let overlays: Record<string, any> = {};
+        years.forEach(year => {
+            const group = L.layerGroup(markers[year]);
+            group.addTo(map);
+            overlays[year] = group;
+        })
+            console.log("Creating layerControl");
+        var layerControl = L.control.layers(undefined, overlays).addTo(map);
+
         };
         loadMap();
     }, []);
