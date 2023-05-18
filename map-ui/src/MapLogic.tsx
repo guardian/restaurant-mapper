@@ -50,7 +50,7 @@ export function MapLogic(props: MapLogicProps) {
             if (!markers[year]) {
                 markers[year] = [];
             }
-            const maybeImg = data.mainImageUrl ? `<img src="${data.mainImageUrl}" />` : ": "
+            const maybeImg = data.headerImageUrl ? `<img src="${data.headerImageUrl}" />` : ": "
             markers[year].push(L.marker([data.possibleCoordinates?.lat, data.possibleCoordinates?.lon], {icon: icon})
                                 .bindPopup(`<a href="https://theguardian.com/${data.articleId}">${data.title}</a>${maybeImg}${data.priceSentences}`));
             }
