@@ -11,7 +11,7 @@ export function MapLogic(props: MapLogicProps) {
     const map = useMap();
     useEffect(() => {
         console.log("Loading map?");
-        map.setView([53.505, -6.1], 7);
+        map.setView([52.505, -3.1], 7);
         props.setMapLoaded(true);
         const loadMap = async () => {
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
