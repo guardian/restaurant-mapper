@@ -9,16 +9,20 @@ export interface TitleBarProps {
     setJayRadarActivated: (activated: boolean) => any 
 }
 
+let radarSoundInterval: number;
+
 export function TitleBar(props: TitleBarProps) {
     let radarAudio = new Audio(sonarAudioFile);
 
     useEffect(() => {
-        setInterval(() => {
-            if (props.jayRadarActivated) {
+        if (!props.jayRadarActivated) {
+            clearInterval(radarSoundInterval);
+        } else {
+            radarSoundInterval = setInterval(() => {
                 radarAudio.play();
-            }
-        }, 5000);
-    });
+            }, 5000) as unknown as number;
+        }
+    }, [props.jayRadarActivated]);
     
 
     return <header className="titleBar">
