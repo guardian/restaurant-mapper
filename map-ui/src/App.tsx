@@ -18,7 +18,7 @@ function App() {
   const [currentLocation, setCurrentLocation] = useState<{lat: number, lon: number} | null>(null);
   useEffect(() => {
     async function getReviews() {
-      const s3Response = await fetch('https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/restaurant_reviews.json');
+      const s3Response = await fetch('https://home.emdash.ie/restaurant_reviews.json');
       const json: { [articleId: string]: RestaurantReview } = await s3Response.json();
       const reviewsByYear = groupReviewsByYear(json);
       setYearOptions(Object.keys(reviewsByYear));

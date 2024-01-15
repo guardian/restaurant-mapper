@@ -10,19 +10,19 @@ type MapLogicProps = {
 };
 
 const jayIcon = L.icon({
-  iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/JayBlueRound.svg',
+  iconUrl: 'https://home.emdash.ie/jay_roundel1.png',
   iconSize: [64, 100],
   iconAnchor: [32, 100],
   popupAnchor: [0, -90],
 });
 const graceIcon = L.icon({
-  iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/GraceBlueRound.svg',
+  iconUrl: 'https://home.emdash.ie/grace_roundel1.png',
   iconSize: [64, 100],
   iconAnchor: [32, 100],
   popupAnchor: [0, -90],
 });
 const unknownIcon = L.icon({
-  iconUrl: 'https://restaurant-mapper-hack.s3.eu-west-1.amazonaws.com/images/UnknownBlueRound.svg',
+  iconUrl: 'https://home.emdash.ie/other_roundel1.png',
   iconSize: [64, 100],
   iconAnchor: [32, 100],
   popupAnchor: [0, -90],
